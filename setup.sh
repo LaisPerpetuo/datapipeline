@@ -11,6 +11,8 @@ CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-${A
 pip3 install "apache-airflow==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL}"
 
 pip install apache-airflow-providers-apache-spark
+pip install boto3
+pip install python-dotenv
 
 # initialize the database
 airflow db init
