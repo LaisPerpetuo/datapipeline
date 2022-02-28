@@ -11,7 +11,7 @@ from airflow.models import DAG
 from airflow.operators.python_operator import PythonOperator
 
 
-load_dotenv('C:/Users/lais/Documents/projetos/datapipeline/credentials_aws.txt')
+load_dotenv('/workspace/datapipeline/credentials_aws.txt')
 
 
 s3_client = boto3.client(
@@ -81,7 +81,7 @@ create_curated = PythonOperator(
 upload_data_landing = PythonOperator(
 
     task_id='upload_data_landing',
-    python_callable = upload_object('C:/Users/lais/Documents/projetos/datapipeline/data/*.csv', 'landing')
+    python_callable = upload_object('/workspace/datapipeline/data/*.csv', 'landing')
 
 )
 
