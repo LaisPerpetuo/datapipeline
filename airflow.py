@@ -21,7 +21,7 @@ s3_client = boto3.client(
 )
 
 
-def create_bucket_landing(bucket_name='landing'):
+def create_bucket_landing(bucket_name='dados-landing'):
     try:
       s3_client.create_bucket(Bucket=bucket_name)
     except ClientError as e:
@@ -30,7 +30,7 @@ def create_bucket_landing(bucket_name='landing'):
         
     return True
 
-def create_bucket_processing(bucket_name='processing'):
+def create_bucket_processing(bucket_name='dados-processing'):
     try:
       s3_client.create_bucket(Bucket=bucket_name)
     except ClientError as e:
@@ -39,7 +39,7 @@ def create_bucket_processing(bucket_name='processing'):
         
     return True
 
-def create_bucket_curated(bucket_name='curated'):
+def create_bucket_curated(bucket_name='dados-curated'):
     try:
       s3_client.create_bucket(Bucket=bucket_name)
     except ClientError as e:
