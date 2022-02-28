@@ -21,7 +21,7 @@ s3_client = boto3.client(
 )
 
 
-def create_bucket(bucket_name):
+def create_bucket_landing(bucket_name='landing'):
     try:
       s3_client.create_bucket(Bucket=bucket_name)
     except ClientError as e:
@@ -30,7 +30,25 @@ def create_bucket(bucket_name):
         
     return True
 
-def upload_object(file_name, bucket, object_name=None):
+def create_bucket_processing(bucket_name='processing'):
+    try:
+      s3_client.create_bucket(Bucket=bucket_name)
+    except ClientError as e:
+        logging.error(e)
+        return False
+        
+    return True
+
+def create_bucket_curated(bucket_name='curated'):
+    try:
+      s3_client.create_bucket(Bucket=bucket_name)
+    except ClientError as e:
+        logging.error(e)
+        return False
+        
+    return True
+
+def upload_object(file_name='/workspace/datapipeline/data/*.csv', bucket='landing', object_name=None):
     if object_name is None:
         object_name = file_name
 
@@ -57,23 +75,26 @@ dag = DAG( dag_id='ETL', default_args=ARGS, schedule_interval=None)
 
 create_landing = PythonOperator(
 
-    task_id='create_bucket_landing',
-    python_callable = create_bucket('landing')
+    task_id='create_bucket-landing',
+    python_callable=create_bucket_landing,
+    dag = dag
 
 )
 
 create_processing = PythonOperator(
 
-    task_id='create_bucket_processing',
-    python_callable = create_bucket('processing')
+    task_id='create_bucket-processing',
+    python_callable=create_bucket_processing,
+    dag = dag
 
 )
 
 
 create_curated = PythonOperator(
 
-    task_id='create_bucket_curated',
-    python_callable = create_bucket('curated')
+    task_id='create_bucket-curated',
+    python_callable=create_bucket_curated,
+    dag = dag
 
 )
 
@@ -81,7 +102,8 @@ create_curated = PythonOperator(
 upload_data_landing = PythonOperator(
 
     task_id='upload_data_landing',
-    python_callable = upload_object('/workspace/datapipeline/data/*.csv', 'landing')
+    python_callable=upload_object,
+    dag = dag
 
 )
 
