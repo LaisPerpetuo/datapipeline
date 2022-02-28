@@ -17,7 +17,8 @@ load_dotenv('/workspace/datapipeline/credentials_aws.txt')
 s3_client = boto3.client(
     's3',
     aws_access_key_id=getenv('access_key_id'),
-    aws_secret_access_key=getenv('secret_access_key')
+    aws_secret_access_key=getenv('secret_access_key'),
+    region_name='us-east-1'
 )
 
 
