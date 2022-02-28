@@ -1,0 +1,3 @@
+credentials_aws.txt
+create_buckets.py
+upload_data.py
