@@ -1,3 +1,4 @@
 credentials_aws.txt
 create_buckets.py
 upload_data.py
+spark-3.2.1-bin-hadoop3.2.tgz
