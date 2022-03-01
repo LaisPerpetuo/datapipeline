@@ -1,4 +1,4 @@
-export SPARK_HOME=/workspace/datapipeline/spark-3.2.1-bin-hadoop3.2
+export SPARK_HOME=/workspace/datapipeline/spark-3.1.2-bin-hadoop3.2
 export AIRFLOW_HOME=~/airflow
 
 AIRFLOW_VERSION=2.0.2
