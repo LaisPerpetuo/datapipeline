@@ -9,6 +9,8 @@ import time
 spark = SparkSession \
     .builder \
     .appName("etl-spark") \
+    .config("fs.s3a.impl","org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.path.style.access", "True")\
     .getOrCreate()
 
 spark.sparkContext.setLogLevel("INFO")
