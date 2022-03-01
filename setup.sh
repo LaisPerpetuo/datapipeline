@@ -13,6 +13,7 @@ pip3 install "apache-airflow==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL
 pip install apache-airflow-providers-apache-spark
 pip install boto3
 pip install python-dotenv
+pip install glob2
 
 # initialize the database
 airflow db init
