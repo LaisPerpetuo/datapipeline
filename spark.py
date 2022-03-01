@@ -18,7 +18,7 @@ spark.sparkContext.setLogLevel("INFO")
 df = spark.read\
     .option("header", "True")\
     .option("inferSchema","True")\
-    .csv("s3a://landing/*.csv")
+    .csv("s3a://dados-landing/*.csv")
     
 
 
@@ -34,7 +34,7 @@ print (df.printSchema())
 print ("\nEscrevendo os dados lidos da landing para parquet na processing zone...")
 df.write.format("parquet")\
         .mode("overwrite")\
-        .save("s3a://processing/df-parquet-file.parquet")
+        .save("s3a://dados-processing/df-parquet-file.parquet")
 
 # lendo arquivos parquet
 df_parquet = spark.read.format("parquet")\
@@ -66,7 +66,7 @@ print ("\nEscrevendo os dados processados na Curated Zone...")
 # converte os dados processados para parquet e escreve na curated zone
 df_result.write.format("parquet")\
          .mode("overwrite")\
-         .save("s3a://curated/df-result-file.parquet")
+         .save("s3a://dados-curated/df-result-file.parquet")
 
 print("Dados armazenados com sucesso na Curated Zone")
 
