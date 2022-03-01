@@ -38,7 +38,7 @@ df.write.format("parquet")\
 
 # lendo arquivos parquet
 df_parquet = spark.read.format("parquet")\
- .load("s3a://processing/df-parquet-file.parquet")
+ .load("s3a://dados-processing/df-parquet-file.parquet")
 
 # imprime os dados lidos em parquet
 print ("\nImprime os dados lidos em parquet da processing zone")
