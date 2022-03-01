@@ -50,22 +50,26 @@ def create_bucket_curated(bucket_name='dados-curated'):
         
     return True
 
-csv_files = glob.glob("/workspace/datapipeline/data/*.csv")
+def upload_object(file_name, bucket, object_name=None):
 
-for file in csv_files:
+            if object_name is None:
+                object_name = file_name
 
-    def upload_object(file_name=file, bucket='landing', object_name=None):
+            try:
+                response = s3_client.upload_file(file_name, bucket, object_name)
+            except ClientError as e:
+                logging.error(e)
+                return False
+            
+            return True
 
-        if object_name is None:
-            object_name = file_name
+def upload():
 
-        try:
-            response = s3_client.upload_file(file_name, bucket, object_name)
-        except ClientError as e:
-            logging.error(e)
-            return False
+    csv_files = glob.glob("/workspace/datapipeline/data/*.csv")
+
+    for file in csv_files:
+        upload_object(file,'landing')
         
-        return True
 
 ARGS = {
     "owner": "lais",
@@ -109,7 +113,7 @@ create_curated = PythonOperator(
 upload_data_landing = PythonOperator(
 
     task_id='upload_data_landing',
-    python_callable=upload_object,
+    python_callable=upload,
     dag = dag
 
 )
