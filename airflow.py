@@ -9,6 +9,7 @@ from os import getenv
 from airflow.contrib.operators.spark_submit_operator import SparkSubmitOperator
 from airflow.models import DAG
 from airflow.operators.python_operator import PythonOperator
+import glob
 
 
 load_dotenv('/workspace/datapipeline/credentials_aws.txt')
@@ -49,17 +50,22 @@ def create_bucket_curated(bucket_name='dados-curated'):
         
     return True
 
-def upload_object(file_name='/workspace/datapipeline/data/*.csv', bucket='landing', object_name=None):
-    if object_name is None:
-        object_name = file_name
+csv_files = glob.glob("/workspace/datapipeline/data/*.csv")
 
-    try:
-        response = s3_client.upload_file(file_name, bucket, object_name)
-    except ClientError as e:
-        logging.error(e)
-        return False
-      
-    return True
+    for file in csv_files:
+
+        def upload_object(file_name=file, bucket='landing', object_name=None):
+
+            if object_name is None:
+                object_name = file_name
+
+            try:
+                response = s3_client.upload_file(file_name, bucket, object_name)
+            except ClientError as e:
+                logging.error(e)
+                return False
+            
+            return True
 
 ARGS = {
     "owner": "lais",
